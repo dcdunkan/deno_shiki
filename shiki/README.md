@@ -1,3 +1,5 @@
+> Work in progress (just the file/url path issues)
+
 <div align="center">
 
 ![](../assets/readme_image.png)
