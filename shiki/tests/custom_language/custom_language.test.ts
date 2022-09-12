@@ -18,9 +18,7 @@ Deno.test("Highlights custom language - Rockstar", async () => {
     ],
   });
 
-  const code = await Deno.readTextFile(
-    "/home/dcdunkan/code/deno/shiki/shiki/tests/custom_language/rockstar.rock",
-  );
+  const code = await Deno.readTextFile(currentDirPath("./rockstar.rock"));
   const out = highlighter.codeToHtml(code, { lang: "rockstar" });
   assertEquals(
     out,
