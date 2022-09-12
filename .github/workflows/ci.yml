@@ -22,6 +22,8 @@ jobs:
 
       - run: deno task check
 
+      - run: "PUPPETEER_PRODUCT=chrome deno run -A --unstable https://deno.land/x/puppeteer@16.2.0/install.ts"
+
       - run: deno task test
 
       - run: deno task update
