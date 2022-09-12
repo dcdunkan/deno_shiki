@@ -1,0 +1,33 @@
+name: Update Grammars & Themes
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-grammars:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
+      - run: deno task update
+
+      - run: deno task test
+
+      - name: commit
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            git config user.name "Shiki"
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add -A
+            git commit -m "chore: update grammars and themes"
+            git push
+          else
+            echo "no changes"
+          fi
