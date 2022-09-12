@@ -241,7 +241,7 @@ export const githubGrammarSources: [string, string][] = [
   ],
   [
     "marko",
-    "https://github.com/marko-js/marko-tmbundle/blob/master/Syntaxes/marko.tmLanguage.json",
+    "https://github.com/marko-js/marko-tmbundle/blob/master/syntaxes/marko.tmLanguage.json",
   ],
   [
     "matlab",
