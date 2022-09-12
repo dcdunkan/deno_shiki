@@ -13,7 +13,7 @@ deno run -A scripts/themes/process_vsc_themes.ts
 echo "> Done getting VS Code themes"
 
 echo "> Getting themes from GitHub"
-deno run -A scripts/themes/pull_themes_from_gitHub.ts
+deno run -A scripts/themes/pull_themes_from_github.ts
 echo "> Done getting themes from GitHub"
 
 echo "> Getting themes from VS Code marketplace"
@@ -25,7 +25,7 @@ deno run -A scripts/themes/normalize_theme_paths.ts
 echo "> Done normalizing themes"
 
 echo "> Copying themes"
-cp tmp/themes/*.json shiki/themes
+cp tmp/themes/*.json themes
 echo "> Done copying themes"
 
 echo "> Updating source files"
@@ -33,7 +33,7 @@ deno run -A scripts/themes/update_theme_source_files.ts
 echo "> Done updating source files"
 
 echo "> Formatting theme files"
-deno fmt shiki/themes/*
+deno fmt themes --no-config
 echo "> Done formatting theme files"
 
 echo "> All done"
