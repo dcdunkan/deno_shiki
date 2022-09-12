@@ -3,7 +3,6 @@ import { dirpathparts, join } from "./utils.ts";
 import {
   createOnigScanner,
   createOnigString,
-  fromFileUrl,
   IOnigLib,
   IRawGrammar,
   IRawTheme,
@@ -31,7 +30,7 @@ export async function setWasm(value: string | Uint8Array) {
 
 export async function getOniguruma(): Promise<IOnigLib> {
   if (WASM === undefined) {
-    await setWasm(fromFileUrl(import.meta.resolve("../assets/onig.wasm")));
+    await setWasm(import.meta.resolve("../assets/onig.wasm"));
   }
   return onigurumaPromise !== undefined
     ? onigurumaPromise
