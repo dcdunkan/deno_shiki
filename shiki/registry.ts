@@ -4,12 +4,12 @@ import {
   IShikiTheme,
   IThemeRegistration,
 } from "./types.ts";
-import { fetchTheme, toShikiTheme } from "./loader.ts";
+import { fetchTheme, resolvePath, toShikiTheme } from "./loader.ts";
 import { Theme } from "./themes.ts";
 import { Resolver } from "./resolver.ts";
 import { Lang } from "./languages.ts";
 
-const THEMES_PATH = import.meta.resolve("../themes/");
+const THEMES_PATH = resolvePath("themes/");
 export class Registry extends TextMateRegistry {
   public themesPath = THEMES_PATH;
 
@@ -32,7 +32,7 @@ export class Registry extends TextMateRegistry {
     if (typeof theme === "string") {
       if (!this._resolvedThemes[theme]) {
         this._resolvedThemes[theme] = await fetchTheme(
-          `${this.themesPath}${theme}.json`,
+          `${this.themesPath}/${theme}.json`,
         );
       }
       return this._resolvedThemes[theme];

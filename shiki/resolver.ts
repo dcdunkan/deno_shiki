@@ -4,10 +4,10 @@
 
 import { IOnigLib, IRawGrammar, RegistryOptions } from "./deps.ts";
 import { languages } from "./languages.ts";
-import { fetchGrammar } from "./loader.ts";
+import { fetchGrammar, resolvePath } from "./loader.ts";
 import { ILanguageRegistration } from "./types.ts";
 
-const LANGUAGES_PATH = import.meta.resolve("../languages/");
+const LANGUAGES_PATH = resolvePath("languages/");
 export class Resolver implements RegistryOptions {
   public languagesPath = LANGUAGES_PATH;
 
@@ -51,7 +51,7 @@ export class Resolver implements RegistryOptions {
 
     const g = await fetchGrammar(
       languages.includes(lang)
-        ? `${this.languagesPath}${lang.path}`
+        ? `${this.languagesPath}/${lang.path}`
         : lang.path!,
     );
     lang.grammar = g;

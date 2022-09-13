@@ -58,7 +58,7 @@ function isUrl(path: string) {
   }
 }
 
-function resolvePath(filepath: string) {
+export function resolvePath(filepath: string) {
   return isAbsolute(filepath) ? filepath : isUrl(filepath) &&
       ["http:", "https:"].includes(new URL(filepath).protocol)
     ? filepath
@@ -73,7 +73,7 @@ function resolvePath(filepath: string) {
 
 async function fetchAssets(filepath: string): Promise<string> {
   const path = resolvePath(filepath);
-  console.log(path);
+  console.log(path, filepath)
   if (
     isRemoteImport ||
     (isUrl(path) && (["http:", "https:"].includes(new URL(path).protocol)))
