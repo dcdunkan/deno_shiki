@@ -1,4 +1,4 @@
-import { fromFileUrl, IGrammar, Registry as TextMateRegistry } from "./deps.ts";
+import { IGrammar, Registry as TextMateRegistry } from "./deps.ts";
 import {
   ILanguageRegistration,
   IShikiTheme,
@@ -9,8 +9,9 @@ import { Theme } from "./themes.ts";
 import { Resolver } from "./resolver.ts";
 import { Lang } from "./languages.ts";
 
+const THEMES_PATH = import.meta.resolve("../themes/");
 export class Registry extends TextMateRegistry {
-  public themesPath = fromFileUrl(import.meta.resolve("../themes/"));
+  public themesPath = THEMES_PATH;
 
   private _resolvedThemes: Record<string, IShikiTheme> = {};
   private _resolvedGrammars: Record<string, IGrammar> = {};
