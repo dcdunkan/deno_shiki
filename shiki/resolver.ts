@@ -2,19 +2,21 @@
  * Copyright (C) Microsoft Corporation. All rights reserved.
  *--------------------------------------------------------*/
 
-import { fromFileUrl, IOnigLib, IRawGrammar, RegistryOptions } from "./deps.ts";
+import { IOnigLib, IRawGrammar, RegistryOptions } from "./deps.ts";
 import { languages } from "./languages.ts";
-import { fetchGrammar } from "./loader.ts";
+import { fetchGrammar, resolvePath } from "./loader.ts";
 import { ILanguageRegistration } from "./types.ts";
 
+const LANGUAGES_PATH = resolvePath("languages/");
 export class Resolver implements RegistryOptions {
-  public languagesPath = fromFileUrl(import.meta.resolve("../languages/"));
+  public languagesPath = LANGUAGES_PATH;
 
   private readonly languageMap: {
     [langIdOrAlias: string]: ILanguageRegistration;
   } = {};
-  private readonly scopeToLangMap: { [scope: string]: ILanguageRegistration } =
-    {};
+  private readonly scopeToLangMap: {
+    [scope: string]: ILanguageRegistration;
+  } = {};
 
   private readonly _onigLibPromise: Promise<IOnigLib>;
   private readonly _onigLibName: string;
@@ -49,7 +51,7 @@ export class Resolver implements RegistryOptions {
 
     const g = await fetchGrammar(
       languages.includes(lang)
-        ? `${this.languagesPath}${lang.path}`
+        ? `${this.languagesPath}/${lang.path}`
         : lang.path!,
     );
     lang.grammar = g;

@@ -14,4 +14,11 @@ export {
   Registry,
   type RegistryOptions,
 } from "https://ghc.deno.dev/dcdunkan/deno_textmate@6.0.0/mod.ts";
-export { fromFileUrl } from "https://deno.land/std@0.155.0/path/mod.ts";
+export {
+  fromFileUrl,
+  isAbsolute,
+  resolve,
+} from "https://deno.land/std@0.155.0/path/mod.ts";
+
+export const isRemoteImport = ["http:", "https:"]
+  .includes(new URL(import.meta.url).protocol);

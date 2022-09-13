@@ -3,9 +3,12 @@ import { dirpathparts, join } from "./utils.ts";
 import {
   createOnigScanner,
   createOnigString,
+  fromFileUrl,
   IOnigLib,
   IRawGrammar,
   IRawTheme,
+  isAbsolute,
+  isRemoteImport,
   loadWASM,
   parse,
   ParseError,
@@ -30,7 +33,7 @@ export async function setWasm(value: string | Uint8Array) {
 
 export async function getOniguruma(): Promise<IOnigLib> {
   if (WASM === undefined) {
-    await setWasm(import.meta.resolve("../assets/onig.wasm"));
+    await setWasm(resolvePath("assets/onig.wasm"));
   }
   return onigurumaPromise !== undefined
     ? onigurumaPromise
@@ -46,10 +49,45 @@ export async function getOniguruma(): Promise<IOnigLib> {
     });
 }
 
-async function _fetchJSONAssets(filepath: string) {
+function isUrl(path: string) {
+  try {
+    new URL(path);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
+export function resolvePath(filepath: string) {
+  return isAbsolute(filepath) ? filepath : isUrl(filepath) &&
+      ["http:", "https:"].includes(new URL(filepath).protocol)
+    ? filepath
+    : isRemoteImport
+    ? import.meta.resolve("../" + filepath)
+    : fromFileUrl(
+      filepath.startsWith("file:///")
+        ? filepath
+        : import.meta.resolve("../" + filepath),
+    );
+}
+
+async function fetchAssets(filepath: string): Promise<string> {
+  const path = resolvePath(filepath);
+  if (
+    (!isAbsolute(path) && isRemoteImport) ||
+    (isUrl(path) && (["http:", "https:"].includes(new URL(path).protocol)))
+  ) {
+    const response = await fetch(path);
+    return await response.text();
+  } else {
+    return await Deno.readTextFile(path);
+  }
+}
+
+async function fetchJSONAssets(filepath: string) {
   const errors: ParseError[] = [];
   const rawTheme = parse(
-    await Deno.readTextFile(filepath),
+    await fetchAssets(filepath),
     errors,
     { allowTrailingComma: true },
   );
@@ -61,7 +99,7 @@ async function _fetchJSONAssets(filepath: string) {
  * @param themePath related path to theme.json
  */
 export async function fetchTheme(themePath: string): Promise<IShikiTheme> {
-  const theme: IRawTheme = await _fetchJSONAssets(themePath);
+  const theme: IRawTheme = await fetchJSONAssets(themePath);
   const shikiTheme = toShikiTheme(theme);
   if (shikiTheme.include) {
     const includedTheme = await fetchTheme(
@@ -82,7 +120,7 @@ export async function fetchTheme(themePath: string): Promise<IShikiTheme> {
 }
 
 export function fetchGrammar(filepath: string): Promise<IRawGrammar> {
-  return _fetchJSONAssets(filepath);
+  return fetchJSONAssets(filepath);
 }
 
 export function repairTheme(theme: IShikiTheme) {
