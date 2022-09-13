@@ -52,5 +52,5 @@ This repository contains the following ported packages.
 
 Modules are confirmed as working as far as I've tested.
 
-Go to the [examples](./examples/) directory to play with Shiki, or try it out
-on [a Deno Deploy playground](https://dash.deno.com/playground/shiki-pg).
+Go to the [examples](./examples/) directory to play with Shiki, or try it out on
+[a Deno Deploy playground](https://dash.deno.com/playground/shiki-pg).
