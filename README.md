@@ -23,7 +23,7 @@ console.log(highlighted);
 ```
 
 It is recommended to set a local or remote oniguruma WASM file by yourself. By
-default it is set to the [onig.wasm](../assets/onig.wasm) file from this
+default it is set to the [onig.wasm](./assets/onig.wasm) file from this
 repository. You can find the origin file
 [here](https://github.com/microsoft/vscode-oniguruma/blob/v1.6.2/out/onig.wasm).
 
@@ -46,11 +46,11 @@ await setWasm(
 
 This repository contains the following ported packages.
 
-- [Shiki](../shiki)
-- [SVG Renderer](../renderer/svg)
-- [Path Renderer](../renderer/path)
+- [Shiki](./shiki)
+- [SVG Renderer](./renderer/svg)
+- [Path Renderer](./renderer/path)
 
 Modules are confirmed as working as far as I've tested.
 
-Go to the [examples](../examples/) directory to play with Shiki, or try it out
+Go to the [examples](./examples/) directory to play with Shiki, or try it out
 on [a Deno Deploy playground](https://dash.deno.com/playground/shiki-pg).
