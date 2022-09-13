@@ -1,6 +1,6 @@
 <div align="center">
 
-![](../assets/readme_image.png)
+![](./assets/readme_image.png)
 
 # Shiki
 
