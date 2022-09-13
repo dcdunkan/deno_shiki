@@ -9,8 +9,8 @@ Shiki is a beautiful Syntax Highlighter. [Demo](http://shiki.matsu.io).
 </div>
 
 Deno port of [Shiki main repository](https://github.com/shikijs/shiki) and the
-packages (except the Vuepress plugin). Give it a star! All credits goes to the
-actual authors and maintainers.
+packages (except the Vuepress plugin). Give the original repository a star! All
+credits goes to the actual authors and maintainers.
 
 ```ts
 import { getHighlighter } from "https://deno.land/x/shiki/shiki/mod.ts";
@@ -46,11 +46,11 @@ await setWasm(
 
 This repository contains the following ported packages.
 
-- [Shiki](../shiki/README.md)
-- [SVG Renderer](../renderer/svg/README.md)
-- [Path Renderer](./renderer/path/README.md)
+- [Shiki](#readme)
+- [SVG Renderer](../renderer/svg)
+- [Path Renderer](../renderer/path)
 
 Modules are confirmed as working as far as I've tested.
 
-Go to the [examples](./examples/) directory to play with Shiki, or try it out on
-[a Deno Deploy playground](#).
+Go to the [examples](../examples/) directory to play with Shiki, or try it out on
+[a Deno Deploy playground](https://dash.deno.com/playground/shiki-pg).
