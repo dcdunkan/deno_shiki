@@ -49,9 +49,20 @@ export async function getOniguruma(): Promise<IOnigLib> {
     });
 }
 
+function isUrl(path: string) {
+  try {
+    new URL(path);
+    return true;
+  } catch (_) {
+    return false;
+  }
+}
+
 function resolvePath(filepath: string) {
-  return isAbsolute(filepath) ||
-      ["http:", "https:"].includes(new URL(filepath).protocol)
+  return isAbsolute(filepath)
+    ? filepath
+    : isUrl(filepath) &&
+        ["http:", "https:"].includes(new URL(filepath).protocol)
     ? filepath
     : isRemoteImport
     ? import.meta.resolve("../" + filepath)
@@ -64,16 +75,9 @@ function resolvePath(filepath: string) {
 
 async function fetchAssets(filepath: string): Promise<string> {
   const path = resolvePath(filepath);
-  let isUrl = false;
-  try {
-    new URL(path);
-    isUrl = true;
-  } catch (_) {
-    //
-  }
   if (
     isRemoteImport ||
-    (isUrl && (["http:", "https:"].includes(new URL(path).protocol)))
+    (isUrl(path) && (["http:", "https:"].includes(new URL(path).protocol)))
   ) {
     const response = await fetch(path);
     return await response.text();
