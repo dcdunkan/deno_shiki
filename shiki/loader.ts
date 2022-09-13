@@ -33,7 +33,7 @@ export async function setWasm(value: string | Uint8Array) {
 
 export async function getOniguruma(): Promise<IOnigLib> {
   if (WASM === undefined) {
-    await setWasm(resolvePath("../assets/onig.wasm"));
+    await setWasm(resolvePath("assets/onig.wasm"));
   }
   return onigurumaPromise !== undefined
     ? onigurumaPromise
