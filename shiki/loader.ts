@@ -73,11 +73,16 @@ export function resolvePath(filepath: string) {
 
 async function fetchAssets(filepath: string): Promise<string> {
   const path = resolvePath(filepath);
-  console.log(path, filepath);
   if (
     (!isAbsolute(path) && isRemoteImport) ||
     (isUrl(path) && (["http:", "https:"].includes(new URL(path).protocol)))
   ) {
+    console.log(path, {
+      isUrl: isUrl(path),
+      protocol: (["http:", "https:"].includes(new URL(path).protocol)),
+      isRemoteImport,
+      isAbsolute: isAbsolute(path),
+    });
     const response = await fetch(path);
     return await response.text();
   } else {
