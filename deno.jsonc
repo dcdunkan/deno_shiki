@@ -4,7 +4,7 @@
   },
   "tasks": {
     "update": "bash ./scripts/pull_themes.sh && bash ./scripts/pull_grammars.sh",
-    "test": "deno test -A --no-check", // --no-check is required due to lib issues.
+    "test": "deno test -A --no-check --ignore=tmp", // --no-check is required due to lib issues.
     "check": "deno check shiki/mod.ts renderer/svg/mod.ts renderer/path/mod.ts"
   }
 }
